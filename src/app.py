@@ -4,7 +4,6 @@ import os
 
 
 from fastapi import FastAPI
-from fastapi_swagger import patch_fastapi
 from fastapi.staticfiles import StaticFiles
 
 
@@ -19,11 +18,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 app = FastAPI(
     title="Jacast",
     version="1.0.0",
-    docs_url=None,
-    swagger_ui_oauth2_redirect_url=None
 )
-
-patch_fastapi(app, docs_url="/swagger")
 
 
 app.include_router(auth_router, prefix='/auth', tags=["auth"])
