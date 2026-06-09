@@ -10,7 +10,7 @@ from schemas.user import UserCreate, ResetPassword
 from models.user import TokenType, User, PasswordResetToken, EmailVerificationToken
 from models.user import UserSession
 from api.security import (get_password_hash, hash_refresh_token, create_access_token, create_refresh_token,
-                           decode_token, create_temp_2fa_token, verify_password_hash, verify_refresh_token)
+                          decode_token, create_temp_2fa_token, verify_password_hash, verify_refresh_token)
 from config import settings
 
 

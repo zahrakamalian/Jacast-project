@@ -9,7 +9,7 @@ from fastapi.staticfiles import StaticFiles
 
 from connections.database import engine, Base
 from config import BASE_DIR
-from api import auth_router, user_router
+from api import auth_router, user_router, podcast_router
 
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -23,6 +23,8 @@ app = FastAPI(
 
 app.include_router(auth_router, prefix='/auth', tags=["auth"])
 app.include_router(user_router, prefix='/users', tags=["users"])
+app.include_router(podcast_router, prefix='/podcasts', tags=["podcasts"])
+
 Base.metadata.create_all(bind=engine)
 
 if not os.getenv("RENDER"):

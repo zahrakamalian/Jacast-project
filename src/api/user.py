@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-from fastapi import APIRouter, Body, Depends, HTTPException, UploadFile, File
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from fastapi.responses import FileResponse
 from typing import Annotated, List
 
@@ -28,7 +28,7 @@ def update_profile(data: UpdateUser, user: Annotated[User, Depends(get_current_u
 @router.delete("/me")
 def delete_user(user: Annotated[User, Depends(get_current_user)], service: Annotated[UserService, Depends(get_user_service)]):
     service.delete_user(user)
-    return {"detail": "Deleted User Successfully"}
+    return {"message": "Deleted User Successfully"}
 
 
 @router.patch("/me/avatar")

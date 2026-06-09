@@ -5,6 +5,7 @@ from sqlalchemy import Column, Integer, String, Boolean, DateTime, Enum as sqlen
 from sqlalchemy.orm import relationship
 
 from connections.database import Base
+from models.subscription import Subscription
 
 
 class UserStatusType(str, Enum):
@@ -35,6 +36,14 @@ class User(Base):
     is_verified = Column(Boolean, default=False)
     is_2FA_enabled = Column(Boolean, default=False)
     secret_key = Column(String)
+
+    podcasts = relationship("Podcast", back_populates="channel")
+    subscriptions = relationship("Subscription", foreign_keys=[
+                                 Subscription.user_id], back_populates="subscriber")
+    channel_subscribers = relationship("Subscription", foreign_keys=[
+                                       Subscription.channel_id], back_populates="channel")
+    reviews = relationship("Review", back_populates="author")
+    reports = relationship("Report", back_populates="reporter")
 
 
 class FollowUser(Base):

@@ -5,6 +5,13 @@ from models.user import (
     PasswordResetToken,
     EmailVerificationToken,
 )
+from models.podcast import (
+    Podcast,
+    Review,
+    Report,
+    ShareLink,
+)
+from models.subscription import Subscription
 
 __all__ = [
     "User",
@@ -12,4 +19,9 @@ __all__ = [
     "UserSession",
     "PasswordResetToken",
     "EmailVerificationToken",
+    "Podcast",
+    "Review",
+    "Report",
+    "ShareLink",
+    "Subscription",
 ]

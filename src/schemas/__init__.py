@@ -13,6 +13,20 @@ from schemas.user import (
     ChangeEmail,
 )
 
+from schemas.podcast import (
+    PodcastBase,
+    PodcastDisplay,
+    PodcastDetail,
+    PaginatedResponse,
+    ReviewCreate,
+    ReviewResponse,
+    PaginatedReviewResponse,
+    ReportCreate,
+    ShareLinkResponse,
+    StatsResponse
+)
+
+
 __all__ = [
     "UserBase",
     "UserCreate",
@@ -26,4 +40,14 @@ __all__ = [
     "UpdateUser",
     "ChangePassword",
     "ChangeEmail",
+    "PodcastBase",
+    "PodcastDisplay",
+    "PodcastDetail",
+    "PaginatedResponse",
+    "ReviewCreate",
+    "ReviewResponse",
+    "PaginatedReviewResponse",
+    "ReportCreate",
+    "ShareLinkResponse",
+    "StatsResponse"
 ]
