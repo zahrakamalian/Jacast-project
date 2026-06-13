@@ -1,4 +1,3 @@
-
 from enum import Enum
 
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Text, Enum as sqlenum
@@ -41,6 +40,7 @@ class Podcast(Base):
     reviews = relationship("Review", back_populates="podcast")
     reports = relationship("Report", back_populates="podcast")
     sharelink = relationship("ShareLink", back_populates="podcast")
+    playlist = relationship("PlaylistPodcast", back_populates="podcast")
 
 
 class Review(Base):

@@ -44,6 +44,9 @@ class User(Base):
                                        Subscription.channel_id], back_populates="channel")
     reviews = relationship("Review", back_populates="author")
     reports = relationship("Report", back_populates="reporter")
+    playlist = relationship("Playlist", back_populates="user")
+    subscribed_playlist = relationship(
+        "SubscriptionPlaylist", back_populates="subscriber")
 
 
 class FollowUser(Base):
@@ -71,7 +74,7 @@ class UserSession(Base):
 
 
 class PasswordResetToken(Base):
-    __tablename__ = "reset-password"
+    __tablename__ = "reset_password"
 
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
@@ -80,7 +83,7 @@ class PasswordResetToken(Base):
 
 
 class EmailVerificationToken(Base):
-    __tablename__ = "verify-email"
+    __tablename__ = "verify_email"
 
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)

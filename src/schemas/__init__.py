@@ -26,6 +26,17 @@ from schemas.podcast import (
     StatsResponse
 )
 
+from schemas.subscription import (
+    SubscriptionCreate,
+    SubscriptionDetail,
+    SubscriptionResponse,
+    PaginatedResponse,
+    SubscriptionUpdate,
+    GroupCreate,
+    GroupDetail,
+    GroupsListResponse
+)
+
 
 __all__ = [
     "UserBase",
@@ -49,5 +60,13 @@ __all__ = [
     "PaginatedReviewResponse",
     "ReportCreate",
     "ShareLinkResponse",
-    "StatsResponse"
+    "StatsResponse",
+    "SubscriptionCreate",
+    "SubscriptionDetail",
+    "SubscriptionResponse",
+    "PaginatedResponse",
+    "SubscriptionUpdate",
+    "GroupCreate",
+    "GroupDetail",
+    "GroupsListResponse"
 ]

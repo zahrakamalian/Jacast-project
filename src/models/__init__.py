@@ -11,7 +11,12 @@ from models.podcast import (
     Report,
     ShareLink,
 )
-from models.subscription import Subscription
+from models.subscription import (
+    Subscription,
+    Group,
+    GroupItem
+)
+
 
 __all__ = [
     "User",
@@ -24,4 +29,6 @@ __all__ = [
     "Report",
     "ShareLink",
     "Subscription",
+    "Group",
+    "GroupItem"
 ]
