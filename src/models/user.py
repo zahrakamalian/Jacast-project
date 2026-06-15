@@ -47,6 +47,8 @@ class User(Base):
     playlist = relationship("Playlist", back_populates="user")
     subscribed_playlist = relationship(
         "SubscriptionPlaylist", back_populates="subscriber")
+    playlist_collaborations = relationship(
+        "PlaylistCollaborator", back_populates="user")
 
 
 class FollowUser(Base):

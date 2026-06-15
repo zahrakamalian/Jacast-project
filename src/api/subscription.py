@@ -1,5 +1,5 @@
-from fastapi import APIRouter, Depends, Form
-from typing import Annotated, Optional
+from fastapi import APIRouter, Depends
+from typing import Annotated
 
 from api.dependencies import get_current_user, get_subscription_service
 from schemas.subscription import PaginatedResponse, SubscriptionResponse, SubscriptionCreate, SubscriptionUpdate, GroupsListResponse, GroupDetail, GroupCreate

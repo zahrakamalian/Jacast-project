@@ -37,6 +37,28 @@ from schemas.subscription import (
     GroupsListResponse
 )
 
+from schemas.playlist import (
+    PlaylistResponse,
+    PaginatedPlaylistResponse,
+    PlaylistCreate,
+    PlaylistUpdate,
+    PlaylistOwnerResponse,
+    PlaylistEpisodeResponse,
+    PlaylistEpisodesResponse,
+    PlaylistDetailResponse,
+    AddEpisodeRequest,
+    ReorderEpisodesRequest,
+    BulkAddRequest,
+    BulkAddResponse,
+    PlaylistShareResponse,
+    CollaborateRequest,
+    CollaborateResponse,
+    AddCollaboratorRequest,
+    CollaboratorResponse,
+    PublicPlaylistResponse,
+    PaginatedPublicPlaylistResponse,
+)
+
 
 __all__ = [
     "UserBase",
@@ -68,5 +90,24 @@ __all__ = [
     "SubscriptionUpdate",
     "GroupCreate",
     "GroupDetail",
-    "GroupsListResponse"
+    "GroupsListResponse",
+    "PlaylistResponse",
+    "PaginatedPlaylistResponse",
+    "PlaylistCreate",
+    "PlaylistUpdate",
+    "PlaylistOwnerResponse",
+    "PlaylistEpisodeResponse",
+    "PlaylistEpisodesResponse",
+    "PlaylistDetailResponse",
+    "AddEpisodeRequest",
+    "ReorderEpisodesRequest",
+    "BulkAddRequest",
+    "BulkAddResponse",
+    "PlaylistShareResponse",
+    "CollaborateRequest",
+    "CollaborateResponse",
+    "AddCollaboratorRequest",
+    "CollaboratorResponse",
+    "PublicPlaylistResponse",
+    "PaginatedPublicPlaylistResponse",
 ]

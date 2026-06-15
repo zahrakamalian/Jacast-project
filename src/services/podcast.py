@@ -64,7 +64,7 @@ class PodcastService:
             "image/webp": ".webp"
         }
         if image_file.content_type not in IMAGE_SUFFIXES:
-            raise HTTPException(415, "Unsupported image format")
+            raise HTTPException(status_code=415, detail="Unsupported image format")
 
         image_extension = IMAGE_SUFFIXES[image_file.content_type]
         image_unique_name = f"cover_{user_id}_{uuid.uuid4().hex}{image_extension}"
@@ -73,7 +73,7 @@ class PodcastService:
 
         content = await image_file.read()
         if len(content) > MAX_IMAGE_SIZE:
-            raise HTTPException(400, "Image too large. Max 5MB")
+            raise HTTPException(status_code=400, detail="Image too large. Max 5MB")
 
         with open(image_file_path, "wb") as f:
             f.write(content)
@@ -95,7 +95,7 @@ class PodcastService:
             "audio/wav": ".wav"
         }
         if audio_file.content_type not in AUDIO_SUFFIXES:
-            raise HTTPException(415, "Unsupported audio format")
+            raise HTTPException(status_code=415, detail="Unsupported audio format")
 
         audio_extension = AUDIO_SUFFIXES[audio_file.content_type]
         audio_unique_name = f"podcast_{user_id}_{uuid.uuid4().hex}{audio_extension}"
@@ -103,7 +103,7 @@ class PodcastService:
         audio_file_path = settings.PODCAST_AUDIO_DIR / audio_unique_name
         content = await audio_file.read()
         if len(content) > MAX_AUDIO_SIZE:
-            raise HTTPException(400, "Audio file too large. Max 50MB")
+            raise HTTPException(status_code=400, detail="Audio file too large. Max 50MB")
 
         with open(audio_file_path, "wb") as f:
             f.write(content)
@@ -248,7 +248,7 @@ class PodcastService:
             raise HTTPException(status_code=404, detail="Podcast not found")
         if user.id != podcast.channel_id:
             raise HTTPException(
-                status_code=403, detail="You are not the owner")
+                status_code=403, detail="You are not allowed to update cover image")
 
         if podcast.cover_art_url:
             self.podcast_repo.delete_podcast_cover_file(

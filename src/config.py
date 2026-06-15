@@ -39,10 +39,18 @@ class Settings(BaseSettings):
         else:
             return BASE_DIR / "resources" / "uploads" / "images"
 
+    @property
+    def PLAYLIST_COVER_DIR(self) -> Path:
+        if os.getenv("RENDER"):
+            return Path("/tmp/playlist_covers")
+        else:
+            return BASE_DIR / "resources" / "uploads" / "images"
+
     def ensure_directories(self):
         self.AVATAR_UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
         self.PODCAST_AUDIO_DIR.mkdir(parents=True, exist_ok=True)
         self.PODCAST_COVER_DIR.mkdir(parents=True, exist_ok=True)
+        self.PLAYLIST_COVER_DIR.mkdir(parents=True, exist_ok=True)
 
 
 settings = Settings()

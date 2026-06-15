@@ -17,6 +17,14 @@ from models.subscription import (
     GroupItem
 )
 
+from models.playlist import (
+    Playlist,
+    PlaylistPodcast,
+    SubscriptionPlaylist,
+    PlaylistShare,
+    PlaylistCollaborator
+)
+
 
 __all__ = [
     "User",
@@ -30,5 +38,10 @@ __all__ = [
     "ShareLink",
     "Subscription",
     "Group",
-    "GroupItem"
+    "GroupItem",
+    "Playlist",
+    "PlaylistPodcast",
+    "SubscriptionPlaylist",
+    "PlaylistShare",
+    "PlaylistCollaborator"
 ]
