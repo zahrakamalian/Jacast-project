@@ -25,6 +25,11 @@ from models.playlist import (
     PlaylistCollaborator
 )
 
+from models.category import (
+    Category,
+    CategoryPodcast
+)
+
 
 __all__ = [
     "User",
@@ -43,5 +48,7 @@ __all__ = [
     "PlaylistPodcast",
     "SubscriptionPlaylist",
     "PlaylistShare",
-    "PlaylistCollaborator"
+    "PlaylistCollaborator",
+    "Category",
+    "CategoryPodcast"
 ]

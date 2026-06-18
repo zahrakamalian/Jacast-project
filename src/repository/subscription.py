@@ -16,16 +16,19 @@ class SubscriptionRepository:
         return self.db.query(Subscription).filter(Subscription.channel_id == channel_id).count()
 
     def get_podcast_subscribers(self, channel_id: int) -> list[User]:
-        return self.db.query(User).join(Subscription, Subscription.user_id == User.id).filter(Subscription.channel_id == channel_id).all()
+        return self.db.query(User).join(Subscription, Subscription.user_id == User.id)\
+            .filter(Subscription.channel_id == channel_id).all()
 
     def get_user_subscriptions(self, user_id: int, limit: int, offset: int):
-        return self.db.query(Subscription).options(joinedload(Subscription.channel)).filter(Subscription.user_id == user_id).order_by(Subscription.subscribed_at.desc()).limit(limit).offset(offset).all()
+        return self.db.query(Subscription).options(joinedload(Subscription.channel))\
+            .filter(Subscription.user_id == user_id).order_by(Subscription.subscribed_at.desc()).limit(limit).offset(offset).all()
 
     def get_user_subscriptions_count(self, user_id: int) -> int:
         return self.db.query(Subscription).filter(Subscription.user_id == user_id).count()
 
     def get_subscription_by_user_and_channel(self, user_id, channel_id) -> Subscription | None:
-        return self.db.query(Subscription).options(joinedload(Subscription.channel)).filter(Subscription.user_id == user_id, Subscription.channel_id == channel_id).first()
+        return self.db.query(Subscription).options(joinedload(Subscription.channel))\
+            .filter(Subscription.user_id == user_id, Subscription.channel_id == channel_id).first()
 
     def subscribe_channel(self, sub: Subscription) -> Subscription:
         self.db.add(sub)
@@ -55,8 +58,8 @@ class SubscriptionRepository:
         return subscription
 
     def get_subscription_groups(self, user_id: int) -> List[Group]:
-        return self.db.query(Group).options(joinedload(Group.group_items).joinedload(GroupItem.subscription).joinedload(
-            Subscription.channel)).filter(Group.user_id == user_id).order_by(Group.created_at.asc()).all()
+        return self.db.query(Group).options(joinedload(Group.group_items).joinedload(GroupItem.subscription).joinedload(Subscription.channel))\
+            .filter(Group.user_id == user_id).order_by(Group.created_at.asc()).all()
 
     def get_subscription_group_by_name_and_user(self, user_id: int, group_name: str) -> Group | None:
         return self.db.query(Group).filter(Group.user_id == user_id, Group.name == group_name).first()
@@ -68,7 +71,8 @@ class SubscriptionRepository:
         return group
 
     def get_group_by_id(self, id: int) -> Group | None:
-        return self.db.query(Group).options(joinedload(Group.group_items).joinedload(GroupItem.subscription).joinedload(Subscription.channel)).filter(Group.id == id).first()
+        return self.db.query(Group).options(joinedload(Group.group_items).joinedload(GroupItem.subscription).joinedload(Subscription.channel))\
+            .filter(Group.id == id).first()
 
     def update_subscription_group(self, group: Group, name: str) -> Group:
         group.name = name

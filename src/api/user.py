@@ -16,62 +16,78 @@ router = APIRouter()
 
 
 @router.get("/me", response_model=UserDisplay)
-def current_user(user: Annotated[User, Depends(get_current_user)], service: Annotated[UserService, Depends(get_user_service)]):
+def current_user(user: Annotated[User, Depends(get_current_user)],
+                 service: Annotated[UserService, Depends(get_user_service)]):
     return service.current_user(user)
 
 
 @router.patch("/me", response_model=UserDisplay)
-def update_profile(data: UpdateUser, user: Annotated[User, Depends(get_current_user)], service: Annotated[UserService, Depends(get_user_service)]):
+def update_profile(data: UpdateUser, user: Annotated[User, Depends(get_current_user)],
+                   service: Annotated[UserService, Depends(get_user_service)]):
     return service.update_user(data, user)
 
 
 @router.delete("/me")
-def delete_user(user: Annotated[User, Depends(get_current_user)], service: Annotated[UserService, Depends(get_user_service)]):
+def delete_user(user: Annotated[User, Depends(get_current_user)],
+                service: Annotated[UserService, Depends(get_user_service)]):
     service.delete_user(user)
     return {"message": "Deleted User Successfully"}
 
 
 @router.patch("/me/avatar")
-async def update_avatar(user: Annotated[User, Depends(get_current_user)], service: Annotated[UserService, Depends(get_user_service)], file: UploadFile = File(None)):
+async def update_avatar(user: Annotated[User, Depends(get_current_user)],
+                        service: Annotated[UserService, Depends(get_user_service)],
+                        file: UploadFile = File(None)):
     await service.upload_avatar(user, file)
     return {"message": "Avatar uploaded successfully"}
 
 
 @router.patch("/me/password")
-def change_password(password: ChangePassword, user: Annotated[User, Depends(get_current_user)], service: Annotated[UserService, Depends(get_user_service)]):
+def change_password(password: ChangePassword,
+                    user: Annotated[User, Depends(get_current_user)],
+                    service: Annotated[UserService, Depends(get_user_service)]):
     service.change_password(password, user)
     return {"message": "Password changed successfully"}
 
 
 @router.patch("/me/email")
-def change_email(data: ChangeEmail, user: Annotated[User, Depends(get_current_user)], service: Annotated[UserService, Depends(get_user_service)]):
+def change_email(data: ChangeEmail,
+                 user: Annotated[User, Depends(get_current_user)],
+                 service: Annotated[UserService, Depends(get_user_service)]):
     service.change_email(data, user)
     return {"message": "Email changed successfully"}
 
 
 @router.get("/{id}", response_model=UserDisplay)
-def public_profile(id: int, service: Annotated[UserService, Depends(get_user_service)]):
+def public_profile(id: int,
+                   service: Annotated[UserService, Depends(get_user_service)]):
     return service.public_profile(id)
 
 
 @router.get("/{id}/followers", response_model=List[UserDisplay])
-def get_followers(id: int, service: Annotated[UserService, Depends(get_user_service)]):
+def get_followers(id: int,
+                  service: Annotated[UserService, Depends(get_user_service)]):
     return service.get_followers(id)
 
 
 @router.get("/{id}/following", response_model=List[UserDisplay])
-def get_following(id: int, service: Annotated[UserService, Depends(get_user_service)]):
+def get_following(id: int,
+                  service: Annotated[UserService, Depends(get_user_service)]):
     return service.get_following(id)
 
 
 @router.post("/{id}/follow")
-def follow_user(id: int, user: Annotated[User, Depends(get_current_user)],  service: Annotated[UserService, Depends(get_user_service)]):
+def follow_user(id: int,
+                user: Annotated[User, Depends(get_current_user)],
+                service: Annotated[UserService, Depends(get_user_service)]):
     service.follow_user(id, user)
     return {"message": "Successfully followed"}
 
 
 @router.delete("/{id}/unfollow")
-def unfollow_user(id: int, user: Annotated[User, Depends(get_current_user)],  service: Annotated[UserService, Depends(get_user_service)]):
+def unfollow_user(id: int,
+                  user: Annotated[User, Depends(get_current_user)],
+                  service: Annotated[UserService, Depends(get_user_service)]):
     service.unfollow_user(id, user)
     return {"message": "Successfully Unfollowed!"}
 

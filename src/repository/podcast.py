@@ -1,31 +1,37 @@
 from datetime import datetime, timezone, timedelta
 
+from typing import List
+
 from models.podcast import Podcast, Review, Report, ShareLink
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import func
 from config import settings
+from models.user import User
 
 
 class PodcastRepository:
     def __init__(self, db: Session):
         self.db = db
 
-    def get_all_podcasts(self, limit: int, offset: int):
-        return self.db.query(Podcast).options(joinedload(Podcast.channel)).order_by(Podcast.created_at.desc()).limit(limit).offset(offset).all()
+    def get_all_podcasts(self, limit: int, offset: int) -> List[Podcast]:
+        return self.db.query(Podcast).options(joinedload(Podcast.channel))\
+            .order_by(Podcast.created_at.desc()).limit(limit).offset(offset).all()
 
     def podcasts_count(self) -> int:
         return self.db.query(Podcast).count()
 
-    def get_trending_podcasts(self, limit: int):
+    def get_trending_podcasts(self, limit: int) -> List[Podcast]:
         return self.db.query(Podcast).order_by(Podcast.play_count.desc(), Podcast.created_at.desc()).limit(limit).all()
 
     def get_top_ranked_podcasts(self, limit: int, days: int = 30):
         date = datetime.now(timezone.utc) - timedelta(days=days)
-        return self.db.query(Podcast).filter(Podcast.created_at >= date).order_by(Podcast.play_count.desc(), Podcast.created_at.desc()).limit(limit).all()
+        return self.db.query(Podcast).filter(Podcast.created_at >= date)\
+            .order_by(Podcast.play_count.desc(), Podcast.created_at.desc()).limit(limit).all()
 
     def get_new_podcasts(self, limit: int, days: int = 7):
         date = datetime.now(timezone.utc) - timedelta(days=days)
-        return self.db.query(Podcast).filter(Podcast.created_at >= date).order_by(Podcast.play_count.desc(), Podcast.created_at.desc()).limit(limit).all()
+        return self.db.query(Podcast).filter(Podcast.created_at >= date)\
+            .order_by(Podcast.play_count.desc(), Podcast.created_at.desc()).limit(limit).all()
 
     def get_podcast_by_id(self, id: int) -> Podcast:
         return self.db.query(Podcast).filter(Podcast.id == id).first()
@@ -77,7 +83,8 @@ class PodcastRepository:
         return podcast
 
     def get_reviews_by_podcast_id(self, id: int, offset: int, limit: int):
-        return self.db.query(Review).options(joinedload(Review.author)).filter(Review.podcast_id == id).order_by(Review.created_at.desc()).limit(limit).offset(offset).all()
+        return self.db.query(Review).options(joinedload(Review.author)).filter(Review.podcast_id == id)\
+            .order_by(Review.created_at.desc()).limit(limit).offset(offset).all()
 
     def count_reviews_by_podcast_id(self, id: int):
         return self.db.query(Review).filter(Review.podcast_id == id).count()
@@ -145,3 +152,27 @@ class PodcastRepository:
         result = self.db.query(func.sum(ShareLink.click_count)).filter(
             ShareLink.podcast_id == id).scalar()
         return result or 0
+
+    def search_podcasts(self, q: str, limit: int, offset: int) -> List[Podcast]:
+        term = f"%{q}%"
+        return self.db.query(Podcast).options(joinedload(Podcast.channel))\
+            .filter(Podcast.title.contains(term) | Podcast.description.contains(term))\
+            .order_by(Podcast.created_at.desc()).offset(offset).limit(limit).all()
+
+    def count_search_podcasts(self, q: str) -> int:
+        return self.db.query(Podcast).filter(Podcast.title.contains(q) | Podcast.description.contains(q)).count()
+
+    def search_episodes(self, q: str, limit: int, offset: int) -> List[Podcast]:
+        term = f"%{q}%"
+        return self.db.query(Podcast).options(joinedload(Podcast.channel))\
+            .filter(Podcast.title.contains(term) | Podcast.description.contains(term) | Podcast.channel.has(User.display_name.contains(term)))\
+            .order_by(Podcast.created_at.desc()).offset(offset).limit(limit).all()
+
+    def count_search_episodes(self, q: str) -> int:
+        return self.db.query(Podcast).filter(Podcast.title.contains(q)).count()
+
+    def get_podcasts_by_ids(self, podcast_ids: List[int], limit: int, offset: int) -> List[Podcast]:
+        if not podcast_ids:
+            return []
+        return self.db.query(Podcast).options(joinedload(Podcast.channel)).filter(Podcast.id.in_(podcast_ids))\
+            .order_by(Podcast.created_at.desc()).offset(offset).limit(limit).all()

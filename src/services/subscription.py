@@ -5,7 +5,8 @@ from repository.subscription import SubscriptionRepository
 from repository.user import UserRepository
 from models.user import User
 from models.subscription import Subscription, Group, GroupItem
-from schemas.subscription import PaginatedResponse, SubscriptionResponse, SubscriptionUpdate, SubscriptionDetail, GroupsListResponse, GroupDetail
+from schemas.subscription import (PaginatedResponse, SubscriptionResponse, SubscriptionUpdate,
+                                  SubscriptionDetail, GroupsListResponse, GroupDetail)
 
 
 class SubscriptionService:

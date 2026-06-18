@@ -27,7 +27,7 @@ class Podcast(Base):
 
     id = Column(Integer, primary_key=True)
     channel_id = Column(Integer, ForeignKey(
-        "users.id", ondelete="CASCADE"), nullable=False)
+        "users.id", ondelete="CASCADE"), nullable=False, index=True)
     title = Column(String, nullable=False)
     description = Column(Text, nullable=True)
     cover_art_url = Column(String)
@@ -41,6 +41,7 @@ class Podcast(Base):
     reports = relationship("Report", back_populates="podcast")
     sharelink = relationship("ShareLink", back_populates="podcast")
     playlist = relationship("PlaylistPodcast", back_populates="podcast")
+    categories = relationship("CategoryPodcast", back_populates="podcast")
 
 
 class Review(Base):

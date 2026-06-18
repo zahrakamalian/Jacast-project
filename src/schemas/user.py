@@ -5,8 +5,6 @@ from typing import Optional
 
 from models.user import UserStatusType, TokenType
 
-# General----------------------------------------------------------------------
-
 
 class UserBase(BaseModel):
     email: EmailStr
@@ -26,8 +24,6 @@ class UserDisplay(UserBase):
 
 class UserCreate(UserBase):
     password: str = Field(..., min_length=8)
-
-# Authentication Schemas-------------------------------------------------------
 
 
 class Token(BaseModel):
@@ -49,7 +45,6 @@ class TokenPayload(BaseModel):
 class SessionResponse(BaseModel):
     id: int
     expires_at: datetime
-    # device if added!
 
 
 class ResetPassword(BaseModel):
@@ -66,8 +61,6 @@ class UserLogin(BaseModel):
 class TwoFAUri(BaseModel):
     secret_key: str
     uri: str
-
-# User Schemas-----------------------------------------------------------------
 
 
 class UpdateUser(BaseModel):

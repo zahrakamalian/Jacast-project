@@ -59,6 +59,24 @@ from schemas.playlist import (
     PaginatedPublicPlaylistResponse,
 )
 
+from schemas.search import (
+    SearchPodcastItem,
+    SearchPodcastResponse,
+    SearchEpisodeItem,
+    SearchEpisodeResponse,
+    SearchUserItem,
+    SearchUserResponse,
+    SearchPlaylistItem,
+    SearchPlaylistResponse,
+    SearchCategoryResult,
+    SearchResponse
+)
+
+from schemas.category import (
+    CategoryResponse,
+    PaginatedCategoryResponse
+)
+
 
 __all__ = [
     "UserBase",
@@ -110,4 +128,16 @@ __all__ = [
     "CollaboratorResponse",
     "PublicPlaylistResponse",
     "PaginatedPublicPlaylistResponse",
+    "SearchPodcastItem",
+    "SearchPodcastResponse",
+    "SearchEpisodeItem",
+    "SearchEpisodeResponse",
+    "SearchUserItem",
+    "SearchUserResponse",
+    "SearchPlaylistItem",
+    "SearchPlaylistResponse",
+    "SearchCategoryResult",
+    "SearchResponse",
+    "CategoryResponse",
+    "PaginatedCategoryResponse"
 ]

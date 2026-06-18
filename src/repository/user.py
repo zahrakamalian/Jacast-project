@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+
 from typing import Optional, List
 
 from sqlalchemy.orm import Session
@@ -45,7 +46,8 @@ class UserRepository:
         return session_list
 
     def get_active_session_by_user_id(self, user_id: int) -> UserSession:
-        return self.db.query(UserSession).filter(UserSession.user_id == user_id, UserSession.is_active == True).order_by(UserSession.created_at.desc()).first()
+        return self.db.query(UserSession).filter(UserSession.user_id == user_id, UserSession.is_active == True)\
+            .order_by(UserSession.created_at.desc()).first()
 
     def create_user(self, user: User) -> User:
         self.db.add(user)
@@ -105,13 +107,16 @@ class UserRepository:
         return user
 
     def get_follow(self, follower_id: int, following_id: int) -> FollowUser:
-        return self.db.query(FollowUser).filter(FollowUser.follower_id == follower_id, FollowUser.following_id == following_id).one_or_none()
+        return self.db.query(FollowUser).filter(FollowUser.follower_id == follower_id,
+                                                FollowUser.following_id == following_id).one_or_none()
 
     def get_followers(self, id: int) -> List[User]:
-        return self.db.query(User).join(FollowUser, FollowUser.follower_id == User.id).filter(FollowUser.following_id == id).all()
+        return self.db.query(User).join(FollowUser, FollowUser.follower_id == User.id)\
+            .filter(FollowUser.following_id == id).all()
 
     def get_following(self, id: int) -> List[User]:
-        return self.db.query(User).join(FollowUser, FollowUser.following_id == User.id).filter(FollowUser.follower_id == id).all()
+        return self.db.query(User).join(FollowUser, FollowUser.following_id == User.id)\
+            .filter(FollowUser.follower_id == id).all()
 
     def follow_user(self, data: FollowUser) -> None:
         self.db.add(data)
@@ -151,3 +156,11 @@ class UserRepository:
     def delete_user_permanently(self, user: User) -> None:
         self.db.delete(user)
         self.db.commit()
+
+    def search_users(self, q: str, offset: int, limit: int) -> List[User]:
+        term = f"%{q}%"
+        return self.db.query(User).filter(User.display_name.contains(term) | User.bio.contains(term))\
+            .order_by(User.display_name.desc()).offset(offset).limit(limit).all()
+
+    def count_search_users(self, q: str) -> int:
+        return self.db.query(User).filter(User.display_name.contains(q) | User.bio.contains(q)).count()
