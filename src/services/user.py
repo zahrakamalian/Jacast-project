@@ -5,11 +5,11 @@ import uuid
 from fastapi import HTTPException, UploadFile
 from typing import List
 
-from repository.user import UserRepository
-from schemas.user import UserDisplay, UpdateUser, ChangePassword, ChangeEmail
-from models.user import User, FollowUser
-from api.security import verify_password_hash, get_password_hash
-from config import settings
+from src.repository.user import UserRepository
+from src.schemas.user import UserDisplay, UpdateUser, ChangePassword, ChangeEmail
+from src.models.user import User, FollowUser
+from src.api.v1.security import verify_password_hash, get_password_hash
+from src.config import settings
 
 
 class UserService:

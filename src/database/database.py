@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base, Session
 from fastapi import Depends
 from typing import Annotated
 
-from config import settings
+from src.config import settings
 
 
 if os.getenv("RENDER"):

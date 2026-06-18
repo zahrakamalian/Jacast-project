@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends
 from typing import Annotated
 
-from api.dependencies import get_current_user, get_subscription_service
-from schemas.subscription import (PaginatedResponse, SubscriptionResponse, SubscriptionCreate,
+from src.api.v1.dependencies import get_current_user, get_subscription_service
+from src.schemas.subscription import (PaginatedResponse, SubscriptionResponse, SubscriptionCreate,
                                   SubscriptionUpdate, GroupsListResponse, GroupDetail, GroupCreate)
-from services.subscription import SubscriptionService
-from models.user import User
+from src.services.subscription import SubscriptionService
+from src.models.user import User
 
 router = APIRouter()
 

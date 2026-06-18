@@ -3,7 +3,7 @@ from datetime import datetime
 from pydantic import BaseModel, Field, EmailStr, ConfigDict
 from typing import Optional
 
-from models.user import UserStatusType, TokenType
+from src.models.user import UserStatusType, TokenType
 
 
 class UserBase(BaseModel):

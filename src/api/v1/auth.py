@@ -2,12 +2,12 @@ from fastapi import APIRouter, Body, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated, List, Union
 
-from schemas.user import (UserCreate, UserDisplay, Token, SessionResponse,
-                          ResetPassword, TwoFAUri)
-from models.user import User
-from api.dependencies import get_current_user, get_auth_service
-from api.security import decode_token, oauth2_bearer
-from services.auth import AuthService
+from src.schemas.user import (UserCreate, UserDisplay, Token, SessionResponse,
+                              ResetPassword, TwoFAUri)
+from src.models.user import User
+from src.api.v1.dependencies import get_current_user, get_auth_service
+from src.api.v1.security import decode_token, oauth2_bearer
+from src.services.auth import AuthService
 
 router = APIRouter()
 

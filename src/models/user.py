@@ -4,8 +4,8 @@ from sqlalchemy.sql import func
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, Enum as sqlenum, ForeignKey
 from sqlalchemy.orm import relationship
 
-from connections.database import Base
-from models.subscription import Subscription
+from src.database.database import Base
+from src.models.subscription import Subscription
 
 
 class UserStatusType(str, Enum):

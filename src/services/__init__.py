@@ -1,9 +1,9 @@
-from services.auth import AuthService
-from services.user import UserService
-from services.podcast import PodcastService
-from services.subscription import SubscriptionService
-from services.playlist import PlaylistService
-from services.search import SearchService
+from .auth import AuthService
+from .user import UserService
+from .podcast import PodcastService
+from .subscription import SubscriptionService
+from .playlist import PlaylistService
+from .search import SearchService
 
 __all__ = ["AuthService",
            "UserService",

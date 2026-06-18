@@ -4,8 +4,8 @@ from typing import List, Optional
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import func
 
-from models.subscription import Subscription, Group, GroupItem
-from models.user import User
+from src.models.subscription import Subscription, Group, GroupItem
+from src.models.user import User
 
 
 class SubscriptionRepository:

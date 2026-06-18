@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, Query
 from typing import Annotated, List
 
-from api.dependencies import get_category_service
-from services.category import CategoryService
-from schemas.category import PaginatedCategoryResponse, CategoryResponse
-from schemas.podcast import PodcastDisplay
+from src.api.v1.dependencies import get_category_service
+from src.services.category import CategoryService
+from src.schemas.category import PaginatedCategoryResponse, CategoryResponse
+from src.schemas.podcast import PodcastDisplay
 
 router = APIRouter()
 

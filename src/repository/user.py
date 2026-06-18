@@ -1,10 +1,10 @@
 from datetime import datetime, timezone
 
 from typing import Optional, List
-
 from sqlalchemy.orm import Session
-from models.user import User, UserSession, PasswordResetToken, EmailVerificationToken, FollowUser
-from config import settings
+
+from src.models.user import User, UserSession, PasswordResetToken, EmailVerificationToken, FollowUser
+from src.config import settings
 
 
 class UserRepository:

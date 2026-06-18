@@ -2,12 +2,12 @@ from datetime import datetime, timedelta, timezone
 
 from passlib.context import CryptContext
 from jose import ExpiredSignatureError, jwt, JWTError
-from fastapi import Depends, HTTPException
+from fastapi import HTTPException
 from fastapi.security import OAuth2PasswordBearer
 
-from schemas.user import TokenPayload
-from models.user import TokenType
-from config import settings
+from src.schemas.user import TokenPayload
+from src.models.user import TokenType
+from src.config import settings
 
 
 if not settings.SECRET_KEY:

@@ -2,12 +2,12 @@ from fastapi import APIRouter, Depends, Query, UploadFile, Form, File, Body
 from fastapi.responses import RedirectResponse
 from typing import Annotated, List, Optional
 
-from schemas.user import UserDisplay
-from schemas.podcast import (PodcastDisplay, PaginatedResponse, PodcastDetail, PaginatedReviewResponse,
+from src.schemas.user import UserDisplay
+from src.schemas.podcast import (PodcastDisplay, PaginatedResponse, PodcastDetail, PaginatedReviewResponse,
                              ReviewCreate, ReviewResponse, ReportCreate, ShareLinkResponse, StatsResponse)
-from api.dependencies import get_podcast_service, get_current_user
-from services.podcast import PodcastService
-from models.user import User
+from src.api.v1.dependencies import get_podcast_service, get_current_user
+from src.services.podcast import PodcastService
+from src.models.user import User
 
 
 router = APIRouter()

@@ -1,13 +1,13 @@
 from fastapi import APIRouter, Query, Depends
 from typing import Annotated, List
 
-from services.search import SearchService
-from schemas.search import (SearchPodcastResponse, SearchEpisodeResponse, SearchPlaylistResponse,
+from src.services.search import SearchService
+from src.schemas.search import (SearchPodcastResponse, SearchEpisodeResponse, SearchPlaylistResponse,
                             SearchUserResponse, SearchResponse, CategoryPodcastsResponse,
                             BrowseResponse)
-from schemas.category import PaginatedCategoryResponse, CategoryResponse
-from api.dependencies import get_search_service
-from schemas.podcast import PodcastDisplay
+from src.schemas.category import PaginatedCategoryResponse, CategoryResponse
+from src.api.v1.dependencies import get_search_service
+from src.schemas.podcast import PodcastDisplay
 
 
 search_router = APIRouter()

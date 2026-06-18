@@ -1,11 +1,11 @@
 from fastapi import HTTPException
 from typing import Optional
 
-from repository.subscription import SubscriptionRepository
-from repository.user import UserRepository
-from models.user import User
-from models.subscription import Subscription, Group, GroupItem
-from schemas.subscription import (PaginatedResponse, SubscriptionResponse, SubscriptionUpdate,
+from src.repository.subscription import SubscriptionRepository
+from src.repository.user import UserRepository
+from src.models.user import User
+from src.models.subscription import Subscription, Group, GroupItem
+from src.schemas.subscription import (PaginatedResponse, SubscriptionResponse, SubscriptionUpdate,
                                   SubscriptionDetail, GroupsListResponse, GroupDetail)
 
 

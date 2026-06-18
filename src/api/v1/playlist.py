@@ -2,14 +2,14 @@ from fastapi import APIRouter, Depends, Query, UploadFile, File
 from fastapi.responses import RedirectResponse
 from typing import Annotated, Optional
 
-from models.user import User
-from api.dependencies import get_current_user, get_playlist_service, get_current_user_optional
-from services.playlist import PlaylistService
-from schemas.playlist import (PlaylistResponse, PlaylistDetailResponse, PlaylistCreate, PlaylistUpdate,
-                              PlaylistEpisodesResponse, PlaylistEpisodeResponse, AddEpisodeRequest,
-                              ReorderEpisodesRequest, BulkAddResponse, BulkAddRequest, PlaylistShareResponse,
-                              CollaborateResponse, CollaborateRequest, AddCollaboratorRequest,
-                              CollaboratorResponse, PaginatedPublicPlaylistResponse, PaginatedPlaylistResponse)
+from src.models.user import User
+from src.api.v1.dependencies import get_current_user, get_playlist_service, get_current_user_optional
+from src.services.playlist import PlaylistService
+from src.schemas.playlist import (PlaylistResponse, PlaylistDetailResponse, PlaylistCreate, PlaylistUpdate,
+                                  PlaylistEpisodesResponse, PlaylistEpisodeResponse, AddEpisodeRequest,
+                                  ReorderEpisodesRequest, BulkAddResponse, BulkAddRequest, PlaylistShareResponse,
+                                  CollaborateResponse, CollaborateRequest, AddCollaboratorRequest,
+                                  CollaboratorResponse, PaginatedPublicPlaylistResponse, PaginatedPlaylistResponse)
 router = APIRouter()
 
 

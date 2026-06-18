@@ -2,7 +2,7 @@ from datetime import datetime
 
 from pydantic import BaseModel, Field
 from typing import Optional, List
-from models.podcast import ReportReason
+from src.models.podcast import ReportReason
 
 
 class PodcastBase(BaseModel):

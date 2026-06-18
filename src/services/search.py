@@ -1,20 +1,20 @@
 from typing import List
 from fastapi import HTTPException
 
-from repository.user import UserRepository
-from repository.podcast import PodcastRepository
-from repository.playlist import PlaylistRepository
-from repository.category import CategoryRepository
-from models.podcast import Podcast
-from models.user import User
-from models.playlist import Playlist
-from schemas.search import (SearchPodcastItem, SearchPodcastResponse, SearchEpisodeItem, SearchEpisodeResponse,
+from src.repository.user import UserRepository
+from src.repository.podcast import PodcastRepository
+from src.repository.playlist import PlaylistRepository
+from src.repository.category import CategoryRepository
+from src.models.podcast import Podcast
+from src.models.user import User
+from src.models.playlist import Playlist
+from src.schemas.search import (SearchPodcastItem, SearchPodcastResponse, SearchEpisodeItem, SearchEpisodeResponse,
                             SearchPlaylistItem, SearchPlaylistResponse, SearchUserItem, SearchUserResponse, SearchResponse,
                             SearchCategoryResult, CategoryPodcastsResponse, BrowseResponse)
-from schemas.podcast import PodcastDisplay
-from schemas.category import PaginatedCategoryResponse, CategoryResponse
-from services.podcast import PodcastService
-from services.category import CategoryService
+from src.schemas.podcast import PodcastDisplay
+from src.schemas.category import PaginatedCategoryResponse, CategoryResponse
+from src.services.podcast import PodcastService
+from src.services.category import CategoryService
 
 
 class SearchService:

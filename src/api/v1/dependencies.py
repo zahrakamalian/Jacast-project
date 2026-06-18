@@ -1,21 +1,21 @@
 from fastapi import HTTPException, Depends
 from typing import Annotated, Optional
 
-from api.security import decode_token, oauth2_bearer
-from models.user import User
-from repository.user import UserRepository
-from repository.podcast import PodcastRepository
-from repository.subscription import SubscriptionRepository
-from repository.category import CategoryRepository
-from repository.playlist import PlaylistRepository
-from services.auth import AuthService
-from services.user import UserService
-from services.podcast import PodcastService
-from services.subscription import SubscriptionService
-from services.playlist import PlaylistService
-from services.search import SearchService
-from services.category import CategoryService
-from connections.database import db_dependency
+from src.api.v1.security import decode_token, oauth2_bearer
+from src.models.user import User
+from src.repository.user import UserRepository
+from src.repository.podcast import PodcastRepository
+from src.repository.subscription import SubscriptionRepository
+from src.repository.category import CategoryRepository
+from src.repository.playlist import PlaylistRepository
+from src.services.auth import AuthService
+from src.services.user import UserService
+from src.services.podcast import PodcastService
+from src.services.subscription import SubscriptionService
+from src.services.playlist import PlaylistService
+from src.services.search import SearchService
+from src.services.category import CategoryService
+from src.database.database import db_dependency
 
 
 def get_user_repository(db: db_dependency) -> UserRepository:

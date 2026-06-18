@@ -1,10 +1,10 @@
-from api.auth import router as auth_router
-from api.user import router as user_router
-from api.podcast import router as podcast_router
-from api.subscription import router as subscription_router
-from api.playlist import router as playlist_router
-from api.search import search_router, discover_router
-from api.category import router as category_router
+from .auth import router as auth_router
+from .user import router as user_router
+from .podcast import router as podcast_router
+from .subscription import router as subscription_router
+from .playlist import router as playlist_router
+from .search import search_router, discover_router
+from .category import router as category_router
 
 __all__ = ["auth_router",
            "user_router",

@@ -5,13 +5,13 @@ from fastapi import HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 import pyotp
 
-from repository.user import UserRepository
-from schemas.user import UserCreate, ResetPassword
-from models.user import TokenType, User, PasswordResetToken, EmailVerificationToken
-from models.user import UserSession
-from api.security import (get_password_hash, hash_refresh_token, create_access_token, create_refresh_token,
-                          decode_token, create_temp_2fa_token, verify_password_hash, verify_refresh_token)
-from config import settings
+from src.repository.user import UserRepository
+from src.schemas.user import UserCreate, ResetPassword
+from src.models.user import TokenType, User, PasswordResetToken, EmailVerificationToken
+from src.models.user import UserSession
+from src.api.v1.security import (get_password_hash, hash_refresh_token, create_access_token, create_refresh_token,
+                                 decode_token, create_temp_2fa_token, verify_password_hash, verify_refresh_token)
+from src.config import settings
 
 
 class AuthService:
@@ -19,25 +19,40 @@ class AuthService:
         self.user_repo = user_repo
 
     def _create_final_token(self, user: User) -> dict:
-        jti = str(uuid.uuid4())
-        expires_at = datetime.now(timezone.utc) + \
-            timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS)
+        try:
+            jti = str(uuid.uuid4())
 
-        access_token = create_access_token(user.id)
-        refresh_token = create_refresh_token(user.id, jti)
-        hashed_refresh_token = hash_refresh_token(refresh_token)
+            expires_at = (
+                datetime.now(timezone.utc)
+                + timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS)
+            )
 
-        new_session = UserSession(
-            user_id=user.id,
-            jti=jti,
-            hashed_refresh_token=hashed_refresh_token,
-            is_active=True,
-            expires_at=expires_at)
+            access_token = create_access_token(user.id)
+            refresh_token = create_refresh_token(user.id, jti)
 
-        self.user_repo.create_session(new_session)
-        return {"access_token": access_token,
+            hashed_refresh_token = hash_refresh_token(refresh_token)
+
+            new_session = UserSession(
+                user_id=user.id,
+                jti=jti,
+                hashed_refresh_token=hashed_refresh_token,
+                is_active=True,
+                expires_at=expires_at,
+            )
+
+            self.user_repo.create_session(new_session)
+
+            return {
+                "access_token": access_token,
                 "refresh_token": refresh_token,
-                "token_type": "bearer"}
+                "token_type": "bearer",
+            }
+
+        except Exception:
+            raise HTTPException(
+                status_code=500,
+                detail="Could not create login session",
+            )
 
     def register_user(self, user_data: UserCreate) -> User:
         existing_user = self.user_repo.get_user_by_email(user_data.email)
@@ -124,7 +139,7 @@ class AuthService:
         token = self.user_repo.get_reset_token_by_string(data.token)
         if not token:
             raise HTTPException(status_code=404, detail="Token not found")
-        if datetime.utcnow() > token.expires_at:
+        if datetime.now(timezone.utc) > token.expires_at:
             raise HTTPException(status_code=400, detail="Token has expired")
 
         user = self.user_repo.get_user_by_id(token.user_id)
@@ -160,7 +175,7 @@ class AuthService:
         existing_token = self.user_repo.get_verification_token(token)
         if not existing_token:
             raise HTTPException(status_code=404, detail="Token not found")
-        if datetime.utcnow() > existing_token.expires_at:
+        if datetime.now(timezone.utc) > existing_token.expires_at:
             raise HTTPException(status_code=400, detail="Token has expired")
 
         user = self.user_repo.get_user_by_id(existing_token.user_id)

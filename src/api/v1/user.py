@@ -5,11 +5,11 @@ from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from fastapi.responses import FileResponse
 from typing import Annotated, List
 
-from schemas.user import UserDisplay, UpdateUser, ChangePassword, ChangeEmail
-from models.user import User
-from api.dependencies import get_current_user, get_user_service
-from services.user import UserService
-from config import settings
+from src.schemas.user import UserDisplay, UpdateUser, ChangePassword, ChangeEmail
+from src.models.user import User
+from src.api.v1.dependencies import get_current_user, get_user_service
+from src.services.user import UserService
+from src.config import settings
 
 
 router = APIRouter()

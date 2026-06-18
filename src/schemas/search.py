@@ -2,8 +2,9 @@ from datetime import datetime
 
 from pydantic import BaseModel, Field
 from typing import Optional, List, Union
-from schemas.podcast import PodcastDisplay
-from schemas.category import CategoryResponse
+
+from src.schemas.podcast import PodcastDisplay
+from src.schemas.category import CategoryResponse
 
 
 class SearchPodcastItem(BaseModel):

@@ -1,4 +1,4 @@
-from schemas.user import (
+from .user import (
     UserBase,
     UserCreate,
     UserDisplay,
@@ -13,7 +13,7 @@ from schemas.user import (
     ChangeEmail,
 )
 
-from schemas.podcast import (
+from .podcast import (
     PodcastBase,
     PodcastDisplay,
     PodcastDetail,
@@ -26,7 +26,7 @@ from schemas.podcast import (
     StatsResponse
 )
 
-from schemas.subscription import (
+from .subscription import (
     SubscriptionCreate,
     SubscriptionDetail,
     SubscriptionResponse,
@@ -37,7 +37,7 @@ from schemas.subscription import (
     GroupsListResponse
 )
 
-from schemas.playlist import (
+from .playlist import (
     PlaylistResponse,
     PaginatedPlaylistResponse,
     PlaylistCreate,
@@ -59,7 +59,7 @@ from schemas.playlist import (
     PaginatedPublicPlaylistResponse,
 )
 
-from schemas.search import (
+from .search import (
     SearchPodcastItem,
     SearchPodcastResponse,
     SearchEpisodeItem,
@@ -72,7 +72,7 @@ from schemas.search import (
     SearchResponse
 )
 
-from schemas.category import (
+from .category import (
     CategoryResponse,
     PaginatedCategoryResponse
 )

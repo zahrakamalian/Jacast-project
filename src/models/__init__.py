@@ -1,23 +1,23 @@
-from models.user import (
+from .user import (
     User,
     FollowUser,
     UserSession,
     PasswordResetToken,
     EmailVerificationToken,
 )
-from models.podcast import (
+from .podcast import (
     Podcast,
     Review,
     Report,
     ShareLink,
 )
-from models.subscription import (
+from .subscription import (
     Subscription,
     Group,
     GroupItem
 )
 
-from models.playlist import (
+from .playlist import (
     Playlist,
     PlaylistPodcast,
     SubscriptionPlaylist,
@@ -25,7 +25,7 @@ from models.playlist import (
     PlaylistCollaborator
 )
 
-from models.category import (
+from .category import (
     Category,
     CategoryPodcast
 )
