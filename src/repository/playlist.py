@@ -3,8 +3,8 @@ from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import func
 
 from src.config import settings
-from src.models.playlist import Playlist, PlaylistPodcast, PlaylistShare, PlaylistCollaborator
-from src.models.podcast import Podcast
+from src.data.models.playlist import Playlist, PlaylistPodcast, PlaylistShare, PlaylistCollaborator
+from src.data.models.podcast import Podcast
 
 
 class PlaylistRepository:

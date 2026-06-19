@@ -4,8 +4,8 @@ from typing import List
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import func
 
-from src.models.category import Category, CategoryPodcast
-from src.models.podcast import Podcast
+from src.data.models.category import Category, CategoryPodcast
+from src.data.models.podcast import Podcast
 
 
 class CategoryRepository:

@@ -7,8 +7,8 @@ import pyotp
 
 from src.repository.user import UserRepository
 from src.schemas.user import UserCreate, ResetPassword
-from src.models.user import TokenType, User, PasswordResetToken, EmailVerificationToken
-from src.models.user import UserSession
+from src.data.models.user import TokenType, User, PasswordResetToken, EmailVerificationToken
+from src.data.models.user import UserSession
 from src.api.v1.security import (get_password_hash, hash_refresh_token, create_access_token, create_refresh_token,
                                  decode_token, create_temp_2fa_token, verify_password_hash, verify_refresh_token)
 from src.config import settings

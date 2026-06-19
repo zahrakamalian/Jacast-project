@@ -9,8 +9,8 @@ from src.config import settings
 from src.repository.playlist import PlaylistRepository
 from src.repository.podcast import PodcastRepository
 from src.repository.user import UserRepository
-from src.models.playlist import Playlist, PlaylistPodcast, PlaylistShare, PlaylistCollaborator
-from src.models.user import User
+from src.data.models.playlist import Playlist, PlaylistPodcast, PlaylistShare, PlaylistCollaborator
+from src.data.models.user import User
 from src.schemas.playlist import (PlaylistResponse, PlaylistDetailResponse, PlaylistOwnerResponse,
                               PlaylistEpisodeResponse, PlaylistCreate, PlaylistUpdate, PlaylistEpisodesResponse,
                               PaginatedPlaylistResponse, ReorderEpisodesRequest, BulkAddRequest, BulkAddResponse,

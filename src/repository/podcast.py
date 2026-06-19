@@ -5,8 +5,8 @@ from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import func
 
 from src.config import settings
-from src.models.user import User
-from src.models.podcast import Podcast, Review, Report, ShareLink
+from src.data.models.user import User
+from src.data.models.podcast import Podcast, Review, Report, ShareLink
 
 
 class PodcastRepository:

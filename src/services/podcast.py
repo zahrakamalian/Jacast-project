@@ -8,8 +8,8 @@ from fastapi import HTTPException, UploadFile
 from src.repository.user import UserRepository
 from src.repository.podcast import PodcastRepository
 from src.repository.subscription import SubscriptionRepository
-from src.models.podcast import Podcast, Review, Report, ShareLink
-from src.models.user import User
+from src.data.models.podcast import Podcast, Review, Report, ShareLink
+from src.data.models.user import User
 from src.schemas.user import UserDisplay
 from src.schemas.podcast import (PodcastDisplay, PaginatedResponse, PodcastDetail, PaginatedReviewResponse,
                              ReviewResponse, ReviewCreate, ReportCreate, ShareLinkResponse, StatsResponse)

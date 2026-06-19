@@ -1,9 +1,9 @@
-from src.models.playlist import Playlist, PlaylistPodcast, SubscriptionPlaylist, PlaylistShare, PlaylistCollaborator
-from src.models.user import User, FollowUser, UserSession, PasswordResetToken, EmailVerificationToken
-from src.models.podcast import Podcast, Review, Report, ShareLink
-from src.models.subscription import Subscription, Group, GroupItem
-from src.models.category import Category, CategoryPodcast
-from src.database.database import Base
+from src.data.models.playlist import Playlist, PlaylistPodcast, SubscriptionPlaylist, PlaylistShare, PlaylistCollaborator
+from src.data.models.user import User, FollowUser, UserSession, PasswordResetToken, EmailVerificationToken
+from src.data.models.podcast import Podcast, Review, Report, ShareLink
+from src.data.models.subscription import Subscription, Group, GroupItem
+from src.data.models.category import Category, CategoryPodcast
+from src.data.database.database import Base
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config

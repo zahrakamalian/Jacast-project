@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
 
-from src.database.database import Base
+from src.data.database.database import Base
 
 
 class Category(Base):

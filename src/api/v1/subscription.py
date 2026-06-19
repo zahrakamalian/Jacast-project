@@ -5,7 +5,7 @@ from src.api.v1.dependencies import get_current_user, get_subscription_service
 from src.schemas.subscription import (PaginatedResponse, SubscriptionResponse, SubscriptionCreate,
                                   SubscriptionUpdate, GroupsListResponse, GroupDetail, GroupCreate)
 from src.services.subscription import SubscriptionService
-from src.models.user import User
+from src.data.models.user import User
 
 router = APIRouter()
 

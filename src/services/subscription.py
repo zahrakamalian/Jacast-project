@@ -3,8 +3,8 @@ from typing import Optional
 
 from src.repository.subscription import SubscriptionRepository
 from src.repository.user import UserRepository
-from src.models.user import User
-from src.models.subscription import Subscription, Group, GroupItem
+from src.data.models.user import User
+from src.data.models.subscription import Subscription, Group, GroupItem
 from src.schemas.subscription import (PaginatedResponse, SubscriptionResponse, SubscriptionUpdate,
                                   SubscriptionDetail, GroupsListResponse, GroupDetail)
 

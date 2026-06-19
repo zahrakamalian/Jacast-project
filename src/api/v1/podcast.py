@@ -7,7 +7,7 @@ from src.schemas.podcast import (PodcastDisplay, PaginatedResponse, PodcastDetai
                              ReviewCreate, ReviewResponse, ReportCreate, ShareLinkResponse, StatsResponse)
 from src.api.v1.dependencies import get_podcast_service, get_current_user
 from src.services.podcast import PodcastService
-from src.models.user import User
+from src.data.models.user import User
 
 
 router = APIRouter()

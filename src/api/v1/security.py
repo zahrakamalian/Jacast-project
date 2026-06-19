@@ -6,7 +6,7 @@ from fastapi import HTTPException
 from fastapi.security import OAuth2PasswordBearer
 
 from src.schemas.user import TokenPayload
-from src.models.user import TokenType
+from src.data.models.user import TokenType
 from src.config import settings
 
 

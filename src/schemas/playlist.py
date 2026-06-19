@@ -2,7 +2,7 @@ from datetime import datetime
 
 from pydantic import BaseModel, Field
 from typing import Optional, List
-from src.models.playlist import Permissions
+from src.data.models.playlist import Permissions
 
 
 class PlaylistResponse(BaseModel):

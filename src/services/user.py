@@ -7,7 +7,7 @@ from typing import List
 
 from src.repository.user import UserRepository
 from src.schemas.user import UserDisplay, UpdateUser, ChangePassword, ChangeEmail
-from src.models.user import User, FollowUser
+from src.data.models.user import User, FollowUser
 from src.api.v1.security import verify_password_hash, get_password_hash
 from src.config import settings
 

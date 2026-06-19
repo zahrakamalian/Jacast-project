@@ -4,7 +4,7 @@ from typing import Annotated, List, Union
 
 from src.schemas.user import (UserCreate, UserDisplay, Token, SessionResponse,
                               ResetPassword, TwoFAUri)
-from src.models.user import User
+from src.data.models.user import User
 from src.api.v1.dependencies import get_current_user, get_auth_service
 from src.api.v1.security import decode_token, oauth2_bearer
 from src.services.auth import AuthService

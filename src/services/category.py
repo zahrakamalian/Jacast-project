@@ -4,8 +4,8 @@ from fastapi import HTTPException
 from src.repository.category import CategoryRepository
 from src.schemas.category import CategoryResponse, PaginatedCategoryResponse
 from src.schemas.podcast import PodcastDisplay
-from src.models.category import Category
-from src.models.podcast import Podcast
+from src.data.models.category import Category
+from src.data.models.podcast import Podcast
 
 
 class CategoryService:

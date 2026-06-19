@@ -5,9 +5,9 @@ from src.repository.user import UserRepository
 from src.repository.podcast import PodcastRepository
 from src.repository.playlist import PlaylistRepository
 from src.repository.category import CategoryRepository
-from src.models.podcast import Podcast
-from src.models.user import User
-from src.models.playlist import Playlist
+from src.data.models.podcast import Podcast
+from src.data.models.user import User
+from src.data.models.playlist import Playlist
 from src.schemas.search import (SearchPodcastItem, SearchPodcastResponse, SearchEpisodeItem, SearchEpisodeResponse,
                             SearchPlaylistItem, SearchPlaylistResponse, SearchUserItem, SearchUserResponse, SearchResponse,
                             SearchCategoryResult, CategoryPodcastsResponse, BrowseResponse)

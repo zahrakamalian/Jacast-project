@@ -6,7 +6,7 @@ from fastapi.responses import FileResponse
 from typing import Annotated, List
 
 from src.schemas.user import UserDisplay, UpdateUser, ChangePassword, ChangeEmail
-from src.models.user import User
+from src.data.models.user import User
 from src.api.v1.dependencies import get_current_user, get_user_service
 from src.services.user import UserService
 from src.config import settings

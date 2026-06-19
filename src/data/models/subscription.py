@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, DateTime, ForeignKey, Boolean, String, F
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 
-from src.database.database import Base
+from src.data.database.database import Base
 
 
 class Subscription(Base):

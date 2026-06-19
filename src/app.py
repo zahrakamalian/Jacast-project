@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
 
-from src.database.database import engine, Base
+from src.data.database.database import engine, Base
 from src.config import BASE_DIR
 from src.api.v1 import (auth_router, user_router, podcast_router, subscription_router,
                      playlist_router, search_router, discover_router, category_router

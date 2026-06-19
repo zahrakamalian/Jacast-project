@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 from typing import Optional, List
 from sqlalchemy.orm import Session
 
-from src.models.user import User, UserSession, PasswordResetToken, EmailVerificationToken, FollowUser
+from src.data.models.user import User, UserSession, PasswordResetToken, EmailVerificationToken, FollowUser
 from src.config import settings
 
 

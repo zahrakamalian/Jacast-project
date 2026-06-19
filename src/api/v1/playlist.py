@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, Query, UploadFile, File
 from fastapi.responses import RedirectResponse
 from typing import Annotated, Optional
 
-from src.models.user import User
+from src.data.models.user import User
 from src.api.v1.dependencies import get_current_user, get_playlist_service, get_current_user_optional
 from src.services.playlist import PlaylistService
 from src.schemas.playlist import (PlaylistResponse, PlaylistDetailResponse, PlaylistCreate, PlaylistUpdate,
