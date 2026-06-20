@@ -23,7 +23,7 @@ class CategoryService:
             created_at=category.created_at
         )
 
-    def _to_podcast_display(podcast: Podcast) -> PodcastDisplay:
+    def _to_podcast_display(self, podcast: Podcast) -> PodcastDisplay:
         return PodcastDisplay(
             id=podcast.id,
             title=podcast.title,
@@ -68,15 +68,6 @@ class CategoryService:
             raise HTTPException(status_code=404, detail="Category not found")
 
         podcasts = self.category_repo.get_category_top_podcasts(
-            category_id, limit)
-        return [self._to_podcast_display(podcast) for podcast in podcasts]
-
-    def get_category_top_podcasts(self, category_id: int, limit: int) -> List[PodcastDisplay]:
-        category = self.category_repo.get_category_by_id(category_id)
-        if not category:
-            raise HTTPException(404, "Category not found")
-
-        podcasts = self.category_repo.get_category_trending_podcasts(
             category_id, limit)
         return [self._to_podcast_display(podcast) for podcast in podcasts]
 

@@ -4,7 +4,7 @@ from typing import Annotated, List, Optional
 
 from src.schemas.user import UserDisplay
 from src.schemas.podcast import (PodcastDisplay, PaginatedResponse, PodcastDetail, PaginatedReviewResponse,
-                             ReviewCreate, ReviewResponse, ReportCreate, ShareLinkResponse, StatsResponse)
+                                 ReviewCreate, ReviewResponse, ReportCreate, ShareLinkResponse, StatsResponse)
 from src.api.v1.dependencies import get_podcast_service, get_current_user
 from src.services.podcast import PodcastService
 from src.data.models.user import User
@@ -64,10 +64,9 @@ async def update_podcast(user: Annotated[User, Depends(get_current_user)],
                              default=None, min_length=3, max_length=255),
                          description: Optional[str] = Form(None),
                          duration: Optional[int] = Form(default=None, gt=0),
-                         audio_file: Optional[UploadFile] = File(None),
-                         cover_image: Optional[UploadFile] = File(None)):
+                         audio_file: Optional[UploadFile] = File(None)):
 
-    return await service.update_podcast(user, id, title, description, duration, audio_file, cover_image)
+    return await service.update_podcast(user, id, title, description, duration, audio_file)
 
 
 @router.delete("/{id}")

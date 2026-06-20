@@ -94,21 +94,21 @@ async def get_current_user_optional(token: Annotated[str, Depends(oauth2_bearer)
         return None
 
 
-def get_current_user(token: Annotated[str, Depends(oauth2_bearer)],
+def get_current_user(token: Annotated[str | None, Depends(oauth2_bearer)],
                      repository: Annotated[UserRepository, Depends(get_user_repository)]) -> User:
-    payload = decode_token(token)
-    if not payload:
-        raise HTTPException(
-            status_code=401, detail="Invalid token")
 
+    if token is None:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
+    payload = decode_token(token)
     if payload.type != "access":
-        raise HTTPException(status_code=401, detail="Invalid token type")
+        raise HTTPException(status_code=401, detail="Invalid token type",)
 
     user = repository.get_user_by_id(int(payload.sub))
-
     if not user:
         raise HTTPException(
             status_code=404, detail="Invalid token: user not found")
+
     if not user.is_verified:
         raise HTTPException(
             status_code=403, detail="Invalid token: user not verified")

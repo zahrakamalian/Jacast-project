@@ -49,6 +49,7 @@ class PlaylistEpisodeResponse(BaseModel):
     id: int
     podcast_id: int
     title: str = Field(..., min_length=1, max_length=255)
+    channel_name: str
     duration: int = Field(..., gt=0)
     cover_art_url: Optional[str] = None
     position: int

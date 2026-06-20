@@ -160,20 +160,16 @@ class PlaylistRepository:
         self.db.commit()
 
     def get_public_playlists(self, offset: int, limit: int) -> List[Playlist]:
-        return self.db.query(Playlist).filter(Playlist.is_public == True)\
-            .order_by(Playlist.created_at.desc()).offset(offset).limit(limit).all()
+        return self.db.query(Playlist).options(joinedload(Playlist.user)).options(joinedload(Playlist.episodes))\
+            .filter(Playlist.is_public == True).order_by(Playlist.created_at.desc()).offset(offset).limit(limit).all()
 
     def count_public_playlists(self) -> int:
         return self.db.query(Playlist).filter(Playlist.is_public == True).count()
 
     def search_public_playlists(self, q: str, limit: int, offset: int) -> List[Playlist]:
-        term = f"%{q}%"
         return self.db.query(Playlist).options(joinedload(Playlist.user))\
-            .options(joinedload(Playlist.episodes)).filter(Playlist.is_public == True, Playlist.title.contains(term) | Playlist.description.contains(term))\
+            .options(joinedload(Playlist.episodes)).filter(Playlist.is_public == True, Playlist.title.contains(q) | Playlist.description.contains(q))\
             .order_by(Playlist.created_at.desc()).limit(limit).offset(offset).all()
 
     def count_search_public_playlists(self, q: str) -> int:
         return self.db.query(Playlist).filter(Playlist.is_public == True, Playlist.title.contains(q) | Playlist.description.contains(q)).count()
-
-    def count_playlist_episodes(self, playlist_id: int) -> int:
-        return self.db.query(PlaylistPodcast).filter(PlaylistPodcast.playlist_id == playlist_id).count()

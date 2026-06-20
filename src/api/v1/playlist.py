@@ -50,11 +50,11 @@ def delete_playlist(id: int,
 
 
 @router.patch("/{id}/cover")
-async def update_cover_art(user: Annotated[User, Depends(get_current_user)],
-                           service: Annotated[PlaylistService, Depends(get_playlist_service)],
+async def update_cover_art(service: Annotated[PlaylistService, Depends(get_playlist_service)],
                            id: int,
+                           user: Annotated[User, Depends(get_current_user)],
                            image_file: UploadFile = File(...)):
-    return await service.update_cover_art(user, id, image_file)
+    return await service.update_cover_art(id, user, image_file)
 
 
 @router.get("/{id}/episodes", response_model=PlaylistEpisodesResponse)

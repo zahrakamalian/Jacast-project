@@ -12,10 +12,10 @@ from src.repository.user import UserRepository
 from src.data.models.playlist import Playlist, PlaylistPodcast, PlaylistShare, PlaylistCollaborator
 from src.data.models.user import User
 from src.schemas.playlist import (PlaylistResponse, PlaylistDetailResponse, PlaylistOwnerResponse,
-                              PlaylistEpisodeResponse, PlaylistCreate, PlaylistUpdate, PlaylistEpisodesResponse,
-                              PaginatedPlaylistResponse, ReorderEpisodesRequest, BulkAddRequest, BulkAddResponse,
-                              PlaylistShareResponse, CollaborateRequest, CollaborateResponse, AddCollaboratorRequest,
-                              CollaboratorResponse, PaginatedPublicPlaylistResponse, PublicPlaylistResponse)
+                                  PlaylistEpisodeResponse, PlaylistCreate, PlaylistUpdate, PlaylistEpisodesResponse,
+                                  PaginatedPlaylistResponse, ReorderEpisodesRequest, BulkAddRequest, BulkAddResponse,
+                                  PlaylistShareResponse, CollaborateRequest, CollaborateResponse, AddCollaboratorRequest,
+                                  CollaboratorResponse, PaginatedPublicPlaylistResponse, PublicPlaylistResponse)
 
 
 class PlaylistService:
@@ -154,7 +154,7 @@ class PlaylistService:
 
         self.playlist_repo.delete_playlist(playlist)
 
-    async def update_cover_art(self, id: int, user: User, image_file: UploadFile) -> PlaylistResponse:
+    async def update_cover_art(self,  user: User, id: int, image_file: UploadFile) -> PlaylistResponse:
         if not image_file or image_file.size == 0:
             raise HTTPException(
                 status_code=400, detail="Cover image is required")
@@ -198,7 +198,9 @@ class PlaylistService:
 
         updated_playlist = self.playlist_repo.update_cover_art_url(
             playlist, cover_url)
-        return self._to_playlist_response(updated_playlist)
+        episodes_count = self.playlist_repo.count_playlist_episodes(
+            updated_playlist.id)
+        return self._to_playlist_response(updated_playlist, episodes_count)
 
     def get_playlist_episodes(self, playlist_id: int, user: Optional[User] = None) -> PlaylistEpisodesResponse:
         playlist = self.playlist_repo.get_playlist_by_id(playlist_id)
@@ -432,15 +434,17 @@ class PlaylistService:
     def remove_collaborator(self, playlist_id: int, user_id: int, user: User) -> None:
         playlist = self.playlist_repo.get_playlist_by_id(playlist_id)
         if not playlist:
-            raise HTTPException(404, "Playlist not found")
+            raise HTTPException(status_code=404, detail="Playlist not found")
 
         if playlist.user_id != user.id:
-            raise HTTPException(403, "Only the owner can remove collaborators")
+            raise HTTPException(
+                status_code=403, detail="Only the owner can remove collaborators")
 
         collaborator = self.playlist_repo.get_collaborator_by_user_id(
             playlist_id, user_id)
         if not collaborator:
-            raise HTTPException(404, "Collaborator not found")
+            raise HTTPException(
+                status_code=404, detail="Collaborator not found")
         self.playlist_repo.remove_collaborator(collaborator)
 
     def get_public_playlists(self, limit: int = 20, page: int = 1) -> PaginatedPublicPlaylistResponse:

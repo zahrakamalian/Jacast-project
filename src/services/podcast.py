@@ -12,7 +12,7 @@ from src.data.models.podcast import Podcast, Review, Report, ShareLink
 from src.data.models.user import User
 from src.schemas.user import UserDisplay
 from src.schemas.podcast import (PodcastDisplay, PaginatedResponse, PodcastDetail, PaginatedReviewResponse,
-                             ReviewResponse, ReviewCreate, ReportCreate, ShareLinkResponse, StatsResponse)
+                                 ReviewResponse, ReviewCreate, ReportCreate, ShareLinkResponse, StatsResponse)
 from src.config import settings
 
 
@@ -186,7 +186,7 @@ class PodcastService:
             raise HTTPException(
                 status_code=400, detail="You are not allowed to create podcast")
 
-        if not audio_file or audio_file.size == 0:
+        if not audio_file:
             raise HTTPException(
                 status_code=400, detail="Audio file is required")
 

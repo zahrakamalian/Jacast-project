@@ -45,9 +45,3 @@ class CategoryRepository:
         return self.db.query(Podcast).join(CategoryPodcast, CategoryPodcast.podcast_id == Podcast.id)\
             .options(joinedload(Podcast.channel)).filter(CategoryPodcast.category_id == category_id, Podcast.created_at >= date)\
             .order_by(Podcast.play_count.desc(), Podcast.created_at.desc()).limit(limit).all()
-
-    def get_category_trending_podcasts(self, category_id: int, limit: int, days: int = 1) -> List[Podcast]:
-        date = datetime.now(timezone.utc) - timedelta(days=days)
-        return self.db.query(Podcast).join(CategoryPodcast, CategoryPodcast.podcast_id == Podcast.id)\
-            .options(joinedload(Podcast.channel)).filter(CategoryPodcast.category_id == category_id, Podcast.created_at >= date)\
-            .order_by(Podcast.play_count.desc(), Podcast.created_at.desc()).limit(limit).all()

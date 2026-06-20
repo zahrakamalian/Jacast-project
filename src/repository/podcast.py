@@ -21,16 +21,16 @@ class PodcastRepository:
         return self.db.query(Podcast).count()
 
     def get_trending_podcasts(self, limit: int) -> List[Podcast]:
-        return self.db.query(Podcast).order_by(Podcast.play_count.desc(), Podcast.created_at.desc()).limit(limit).all()
+        return self.db.query(Podcast).options(joinedload(Podcast.channel)).order_by(Podcast.play_count.desc(), Podcast.created_at.desc()).limit(limit).all()
 
     def get_top_ranked_podcasts(self, limit: int, days: int = 30):
         date = datetime.now(timezone.utc) - timedelta(days=days)
-        return self.db.query(Podcast).filter(Podcast.created_at >= date)\
+        return self.db.query(Podcast).options(joinedload(Podcast.channel)).filter(Podcast.created_at >= date)\
             .order_by(Podcast.play_count.desc(), Podcast.created_at.desc()).limit(limit).all()
 
     def get_new_podcasts(self, limit: int, days: int = 7):
         date = datetime.now(timezone.utc) - timedelta(days=days)
-        return self.db.query(Podcast).filter(Podcast.created_at >= date)\
+        return self.db.query(Podcast).options(joinedload(Podcast.channel)).filter(Podcast.created_at >= date)\
             .order_by(Podcast.play_count.desc(), Podcast.created_at.desc()).limit(limit).all()
 
     def get_podcast_by_id(self, id: int) -> Podcast:

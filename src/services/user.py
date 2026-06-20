@@ -98,6 +98,11 @@ class UserService:
             raise HTTPException(
                 status_code=400, detail="New email must be different from current email")
 
+        existing_user = self.user_repo.get_user_by_email(data.new_email)
+
+        if existing_user:
+            raise HTTPException(status_code=400, detail="Email already exists")
+
         user.email = data.new_email
         self.user_repo.commit_session()
 

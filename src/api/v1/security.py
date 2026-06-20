@@ -68,7 +68,10 @@ def create_temp_2fa_token(user_id: int) -> str:
     return jwt.encode(payload, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
 
 
-def decode_token(token: str) -> TokenPayload:
+def decode_token(token: str | None) -> TokenPayload:
+    if token is None:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
     try:
         payload = jwt.decode(token, settings.SECRET_KEY,
                              algorithms=[settings.ALGORITHM])
@@ -79,6 +82,3 @@ def decode_token(token: str) -> TokenPayload:
 
     except JWTError:
         raise HTTPException(status_code=401, detail="Invalid token")
-
-    except Exception as e:
-        raise HTTPException(status_code=500, detail="Internal server error")
