@@ -29,13 +29,13 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],                    # برای تست — بعداً محدود کنید
+    allow_origins=["*"],           
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allow_headers=["*"],
-    expose_headers=["*"]
+    expose_headers=["*"],
+    max_age=360
 )
-
 
 app.include_router(auth_router, prefix='/auth', tags=["auth"])
 app.include_router(user_router, prefix='/users', tags=["users"])
