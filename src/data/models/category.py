@@ -14,7 +14,7 @@ class Category(Base):
     slug = Column(String, unique=True, index=True, nullable=False)
     description = Column(Text, nullable=True)
     icon_url = Column(String, nullable=True)
-    created_at = Column(DateTime, default=func.now())
+    created_at = Column(DateTime(timezone=True), default=func.now())
 
     podcasts = relationship("CategoryPodcast", back_populates="category")
 

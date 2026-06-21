@@ -34,7 +34,7 @@ class Podcast(Base):
     audio_url = Column(String, nullable=False)
     duration = Column(Integer, nullable=True)
     play_count = Column(Integer, default=0)
-    created_at = Column(DateTime, default=func.now())
+    created_at = Column(DateTime(timezone=True), default=func.now())
 
     channel = relationship("User", back_populates="podcasts")
     reviews = relationship("Review", back_populates="podcast")
@@ -54,8 +54,9 @@ class Review(Base):
         "podcasts.id", ondelete="CASCADE"), nullable=False, index=True)
     rating = Column(Integer, nullable=False)
     comment = Column(Text, nullable=True)
-    created_at = Column(DateTime, default=func.now())
-    updated_at = Column(DateTime, nullable=True)
+    created_at = Column(DateTime(timezone=True), default=func.now())
+    updated_at = Column(DateTime(timezone=True),
+                        nullable=True, onupdate=func.now())
 
     author = relationship("User", back_populates="reviews")
     podcast = relationship("Podcast", back_populates="reviews")
@@ -72,7 +73,7 @@ class Report(Base):
     reason = Column(sqlenum(ReportReason), nullable=False)
     description = Column(Text, nullable=True)
     status = Column(sqlenum(ReportStatus), default=ReportStatus.PENDING)
-    created_at = Column(DateTime, default=func.now())
+    created_at = Column(DateTime(timezone=True), default=func.now())
 
     reporter = relationship("User", back_populates="reports")
     podcast = relationship("Podcast", back_populates="reports")
@@ -86,6 +87,6 @@ class ShareLink(Base):
         "podcasts.id", ondelete="CASCADE"), nullable=False)
     token = Column(String, unique=True, index=True)
     click_count = Column(Integer, default=0)
-    created_at = Column(DateTime, default=func.now())
+    created_at = Column(DateTime(timezone=True), default=func.now())
 
     podcast = relationship("Podcast", back_populates="sharelink")

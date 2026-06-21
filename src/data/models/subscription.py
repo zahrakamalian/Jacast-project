@@ -13,11 +13,11 @@ class Subscription(Base):
         "users.id", ondelete="CASCADE"), nullable=False, index=True)
     channel_id = Column(Integer, ForeignKey(
         "users.id", ondelete="CASCADE"), nullable=False, index=True)
-    subscribed_at = Column(DateTime, default=func.now())
+    subscribed_at = Column(DateTime(timezone=True), default=func.now())
     notifications_enabled = Column(Boolean, default=True)
     custom_name = Column(String, nullable=True)
     playback_speed = Column(Float, default=1.0)
-    updated_at = Column(DateTime, default=None, onupdate=func.now())
+    updated_at = Column(DateTime(timezone=True), nullable=True, onupdate=func.now())
 
     subscriber = relationship("User", foreign_keys=[
                               user_id], back_populates="subscriptions")
@@ -33,7 +33,7 @@ class Group(Base):
     user_id = Column(Integer, ForeignKey(
         "users.id", ondelete="CASCADE"), nullable=False, index=True)
     name = Column(String, nullable=False)
-    created_at = Column(DateTime, default=func.now())
+    created_at = Column(DateTime(timezone=True), default=func.now())
 
     group_items = relationship("GroupItem", back_populates="group")
 

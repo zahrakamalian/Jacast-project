@@ -14,6 +14,12 @@ from src.api.v1.security import (get_password_hash, hash_refresh_token, create_a
 from src.config import settings
 
 
+def is_expired(expires_at: datetime) -> bool:
+    if expires_at.tzinfo is None: 
+        expires_at = expires_at.replace(tzinfo=timezone.utc)
+    return datetime.now(timezone.utc) > expires_at
+
+
 class AuthService:
     def __init__(self, user_repo: UserRepository):
         self.user_repo = user_repo
@@ -21,17 +27,11 @@ class AuthService:
     def _create_final_token(self, user: User) -> dict:
         try:
             jti = str(uuid.uuid4())
-
-            expires_at = (
-                datetime.now(timezone.utc)
-                + timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS)
-            )
-
+            expires_at = (datetime.now(timezone.utc) +
+                          timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS))
             access_token = create_access_token(user.id)
             refresh_token = create_refresh_token(user.id, jti)
-
             hashed_refresh_token = hash_refresh_token(refresh_token)
-
             new_session = UserSession(
                 user_id=user.id,
                 jti=jti,
@@ -39,20 +39,15 @@ class AuthService:
                 is_active=True,
                 expires_at=expires_at,
             )
-
             self.user_repo.create_session(new_session)
-
             return {
                 "access_token": access_token,
                 "refresh_token": refresh_token,
                 "token_type": "bearer",
             }
-
         except Exception:
             raise HTTPException(
-                status_code=500,
-                detail="Could not create login session",
-            )
+                status_code=500, detail="Could not create login session")
 
     def register_user(self, user_data: UserCreate) -> User:
         existing_user = self.user_repo.get_user_by_email(user_data.email)
@@ -133,13 +128,14 @@ class AuthService:
 
         self.user_repo.create_reset_token(new_password_token)
 
-        return {"token": password_token,  "exp": expires}
+        return {"token": password_token, "exp": expires}
 
     def reset_password(self, data: ResetPassword) -> None:
         token = self.user_repo.get_reset_token_by_string(data.token)
         if not token:
             raise HTTPException(status_code=404, detail="Token not found")
-        if datetime.now(timezone.utc) > token.expires_at:
+
+        if is_expired(token.expires_at):
             raise HTTPException(status_code=400, detail="Token has expired")
 
         user = self.user_repo.get_user_by_id(token.user_id)
@@ -175,7 +171,8 @@ class AuthService:
         existing_token = self.user_repo.get_verification_token(token)
         if not existing_token:
             raise HTTPException(status_code=404, detail="Token not found")
-        if datetime.now(timezone.utc) > existing_token.expires_at:
+
+        if is_expired(existing_token.expires_at):
             raise HTTPException(status_code=400, detail="Token has expired")
 
         user = self.user_repo.get_user_by_id(existing_token.user_id)

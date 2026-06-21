@@ -23,7 +23,7 @@ class Playlist(Base):
     description = Column(Text, nullable=True)
     cover_art_url = Column(String)
     is_public = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=func.now())
+    created_at = Column(DateTime(timezone=True), default=func.now())
     is_collaborative = Column(Boolean, default=False)
 
     user = relationship("User", back_populates="playlist")
@@ -45,8 +45,8 @@ class PlaylistPodcast(Base):
     playlist_id = Column(Integer, ForeignKey(
         "playlists.id", ondelete="CASCADE"), nullable=False, index=True)
     position = Column(Integer, default=0)
-    added_at = Column(DateTime, default=func.now())
-
+    added_at = Column(DateTime(timezone=True), default=func.now())
+    
     playlist = relationship("Playlist", back_populates="episodes")
     podcast = relationship("Podcast", back_populates="playlist")
 
@@ -59,7 +59,7 @@ class SubscriptionPlaylist(Base):
         "users.id", ondelete="CASCADE"), nullable=False, index=True)
     playlist_id = Column(Integer, ForeignKey(
         "playlists.id", ondelete="CASCADE"), nullable=False, index=True)
-    subscribed_at = Column(DateTime, default=func.now())
+    subscribed_at = Column(DateTime(timezone=True), default=func.now())
 
     subscriber = relationship("User", back_populates="subscribed_playlist")
     playlist = relationship("Playlist", back_populates="subscription")
@@ -73,8 +73,8 @@ class PlaylistShare(Base):
         "playlists.id", ondelete="CASCADE"), nullable=False)
     token = Column(String, unique=True, index=True, nullable=False)
     click_count = Column(Integer, default=0)
-    created_at = Column(DateTime, default=func.now())
-
+    created_at = Column(DateTime(timezone=True), default=func.now())
+    
     playlist = relationship("Playlist", back_populates="shares")
 
 
@@ -87,7 +87,7 @@ class PlaylistCollaborator(Base):
     user_id = Column(Integer, ForeignKey(
         "users.id", ondelete="CASCADE"), nullable=False, index=True)
     permission = Column(sqlenum(Permissions), default=Permissions.EDIT)
-    added_at = Column(DateTime, default=func.now())
-
+    added_at = Column(DateTime(timezone=True), default=func.now())
+    
     playlist = relationship("Playlist", back_populates="collaborators")
     user = relationship("User", back_populates="playlist_collaborations")

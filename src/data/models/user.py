@@ -30,9 +30,9 @@ class User(Base):
     avatar_url = Column(String)
     bio = Column(String)
     is_channel = Column(Boolean, default=False)
-    created_at = Column(DateTime, default=func.now())
+    created_at = Column(DateTime(timezone=True), default=func.now())
     status = Column(sqlenum(UserStatusType), default=UserStatusType.Logged_In)
-    last_activity = Column(DateTime, default=func.now())
+    last_activity = Column(DateTime(timezone=True), default=func.now())
     is_verified = Column(Boolean, default=False)
     is_2FA_enabled = Column(Boolean, default=False)
     secret_key = Column(String)
@@ -59,7 +59,7 @@ class FollowUser(Base):
         "users.id", ondelete="CASCADE"), nullable=False)
     following_id = Column(Integer, ForeignKey(
         "users.id", ondelete="CASCADE"), nullable=False)
-    followed_at = Column(DateTime, default=func.now())
+    followed_at = Column(DateTime(timezone=True), default=func.now())
 
 
 class UserSession(Base):
@@ -71,8 +71,8 @@ class UserSession(Base):
     jti = Column(String, nullable=False, index=True, unique=True)
     hashed_refresh_token = Column(String, nullable=True)
     is_active = Column(Boolean, default=True)
-    expires_at = Column(DateTime, nullable=False)
-    created_at = Column(DateTime, default=func.now())
+    expires_at = Column(DateTime(timezone=True), nullable=False)  
+    created_at = Column(DateTime(timezone=True), default=func.now())
 
 
 class PasswordResetToken(Base):
@@ -81,7 +81,7 @@ class PasswordResetToken(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     token = Column(String)
-    expires_at = Column(DateTime)
+    expires_at = Column(DateTime(timezone=True), nullable=False)
 
 
 class EmailVerificationToken(Base):
@@ -90,4 +90,4 @@ class EmailVerificationToken(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     token = Column(String)
-    expires_at = Column(DateTime)
+    expires_at = Column(DateTime(timezone=True), nullable=False)
