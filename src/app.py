@@ -1,7 +1,7 @@
 from pathlib import Path
 import os
 
-
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
@@ -26,6 +26,16 @@ app = FastAPI(
     redoc_url="/redoc",
     lifespan=lifespan
 )
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],                    # برای تست — بعداً محدود کنید
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    expose_headers=["*"]
+)
+
 
 app.include_router(auth_router, prefix='/auth', tags=["auth"])
 app.include_router(user_router, prefix='/users', tags=["users"])
