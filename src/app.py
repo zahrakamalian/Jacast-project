@@ -4,20 +4,28 @@ import os
 
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-
+from contextlib import asynccontextmanager
 
 from src.data.database.database import engine, Base
 from src.config import BASE_DIR
 from src.api.v1 import (auth_router, user_router, podcast_router, subscription_router,
-                     playlist_router, search_router, discover_router, category_router
-                     )
+                        playlist_router, search_router, discover_router, category_router
+                        )
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    Base.metadata.create_all(bind=engine)
+    yield
 
 
 app = FastAPI(
-    title="Jacast",
+    title="Jacast API",
     version="1.0.0",
+    docs_url="/docs",
+    redoc_url="/redoc",
+    lifespan=lifespan
 )
-
 
 app.include_router(auth_router, prefix='/auth', tags=["auth"])
 app.include_router(user_router, prefix='/users', tags=["users"])
@@ -33,3 +41,11 @@ app.include_router(category_router, prefix='/categories', tags=["categories"])
 if not os.getenv("RENDER"):
     app.mount("/resources", StaticFiles(directory=str(BASE_DIR /
               "resources")), name="resources")
+
+
+@app.get("/")
+async def root():
+    return {
+        "message": "Jacast API is running successfully",
+        "docs": "/docs"
+    }
