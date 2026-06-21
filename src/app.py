@@ -29,13 +29,31 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],           
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allow_methods=["*"],
     allow_headers=["*"],
     expose_headers=["*"],
-    max_age=360
+    max_age=3600,
 )
+
+app.openapi_schema = None
+
+
+@app.get("/openapi.json", include_in_schema=False)
+async def custom_openapi():
+    if not app.openapi_schema:
+        schema = app.openapi()
+        schema["components"]["securitySchemes"] = {
+            "OAuth2PasswordBearer": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+        app.openapi_schema = schema
+    return app.openapi_schema
+
 
 app.include_router(auth_router, prefix='/auth', tags=["auth"])
 app.include_router(user_router, prefix='/users', tags=["users"])
