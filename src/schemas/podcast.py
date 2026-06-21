@@ -46,7 +46,7 @@ class ReviewResponse(BaseModel):
     rating: int = Field(..., ge=1, le=5)
     comment: Optional[str] = None
     created_at: datetime
-    updated_at: datetime = Field(default=None)
+    updated_at: Optional[datetime] = None
 
 
 class PaginatedReviewResponse(BaseModel):
