@@ -16,11 +16,7 @@ def create_playlist_data(user_id: int, title: str = "My Playlist",
     )
 
 
-def create_playlist_episode(
-    playlist_id,
-    podcast_id,
-    position=0,
-):
+def create_playlist_episode(playlist_id, podcast_id, position=0):
     return PlaylistPodcast(
         playlist_id=playlist_id,
         podcast_id=podcast_id,

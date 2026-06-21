@@ -6,7 +6,7 @@ from src.repository.user import UserRepository
 from src.data.models.user import User
 from src.data.models.subscription import Subscription, Group, GroupItem
 from src.schemas.subscription import (PaginatedResponse, SubscriptionResponse, SubscriptionUpdate,
-                                  SubscriptionDetail, GroupsListResponse, GroupDetail)
+                                      SubscriptionDetail, GroupsListResponse, GroupDetail)
 
 
 class SubscriptionService:
@@ -17,26 +17,22 @@ class SubscriptionService:
     def _to_response(self, subscription: Subscription) -> SubscriptionResponse:
         return SubscriptionResponse(
             id=subscription.channel_id,
-            title=subscription.channel.title,
             channel_name=subscription.channel.display_name,
-            cover_art_url=subscription.channel.cover_art_url,
-            duration=subscription.channel.duration,
+            avatar_url=subscription.channel.avatar_url,
             created_at=subscription.channel.created_at,
             subscribed_at=subscription.subscribed_at,
             notifications_enabled=subscription.notifications_enabled,
             custom_name=subscription.custom_name,
-            playback_speed=subscription.playback_speed
+            playback_speed=subscription.playback_speed,
         )
 
     def _to_subscription_detail(self, group_item: GroupItem) -> SubscriptionDetail:
         return SubscriptionDetail(
             id=group_item.subscription.channel_id,
-            title=group_item.subscription.channel.title,
             channel_name=group_item.subscription.channel.display_name,
-            cover_art_url=group_item.subscription.channel.cover_art_url,
-            duration=group_item.subscription.channel.duration,
+            avatar_url=group_item.subscription.channel.avatar_url,
             created_at=group_item.subscription.channel.created_at,
-            subscribed_at=group_item.subscription.subscribed_at
+            subscribed_at=group_item.subscription.subscribed_at,
         )
 
     def _to_group_detail(self, group: Group) -> GroupDetail:
@@ -210,6 +206,10 @@ class SubscriptionService:
         if not subscription:
             raise HTTPException(
                 status_code=404, detail="Subscription not found")
+
+        if subscription.user_id != user.id:
+            raise HTTPException(
+                status_code=403, detail="You are not the owner of this subscription")
 
         existing = self.sub_repo.get_group_item_by_group_and_subscription(
             group.id, subscription.id)

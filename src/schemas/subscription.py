@@ -10,10 +10,8 @@ class SubscriptionCreate(BaseModel):
 
 class SubscriptionDetail(BaseModel):
     id: int
-    title: str
     channel_name: str
-    cover_art_url: Optional[str] = None
-    duration: int
+    avatar_url: Optional[str] = None
     created_at: datetime
     subscribed_at: datetime
 
@@ -21,7 +19,7 @@ class SubscriptionDetail(BaseModel):
 class SubscriptionResponse(SubscriptionDetail):
     notifications_enabled: Optional[bool] = Field(default=None)
     custom_name: Optional[str] = Field(default=None)
-    playback_speed: Optional[float] = Field(ge=0.5, le=2.0)
+    playback_speed: Optional[float] = Field(default=None, ge=0.5, le=2.0)
 
 
 class PaginatedResponse(BaseModel):
@@ -37,7 +35,7 @@ class PaginatedResponse(BaseModel):
 class SubscriptionUpdate(BaseModel):
     notifications_enabled: Optional[bool] = None
     custom_name: Optional[str] = None
-    playback_speed: Optional[float] = Field(ge=0.5, le=2.0)
+    playback_speed: Optional[float] = Field(default=None, ge=0.5, le=2.0)
 
 
 class GroupCreate(BaseModel):

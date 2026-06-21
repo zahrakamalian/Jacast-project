@@ -155,9 +155,7 @@ def test_change_email_duplicate(client, authenticated_user, second_user):
         }
     )
     assert response.status_code == 400
-    assert response.json()["detail"] == (
-        "Email already exists"
-    )
+    assert response.json()["detail"] == ("Email already exists")
 
 
 def test_public_profile(client, authenticated_user):
@@ -181,9 +179,7 @@ def test_follow_user_success(client, authenticated_user, second_user):
         }
     )
     assert response.status_code == 200
-    assert response.json() == {
-        "message": "Successfully followed"
-    }
+    assert response.json() == {"message": "Successfully followed"}
 
 
 def test_follow_duplicate(client, authenticated_user, second_user):
@@ -242,9 +238,7 @@ def test_unfollow_success(client, authenticated_user, second_user):
         }
     )
     assert response.status_code == 200
-    assert response.json() == {
-        "message": "Successfully Unfollowed!"
-    }
+    assert response.json() == {"message": "Successfully Unfollowed!"}
 
 
 def test_unfollow_without_follow(client, authenticated_user, second_user):
@@ -269,92 +263,53 @@ def test_get_followers(
                 f"Bearer {authenticated_user['access_token']}"
         },
     )
-
-    response = client.get(
-        f"/users/{second_user['user'].id}/followers"
-    )
-
+    response = client.get(f"/users/{second_user['user'].id}/followers")
     assert response.status_code == 200
-
     followers = response.json()
-
     assert len(followers) == 1
-
-    assert (
-        followers[0]["email"]
-        == authenticated_user["payload"]["email"]
-    )
+    assert (followers[0]["email"] == authenticated_user["payload"]["email"])
 
 
-def test_get_following(
-        client,
-        authenticated_user,
-        second_user,):
+def test_get_following(client, authenticated_user, second_user,):
     client.post(
         f"/users/{second_user['user'].id}/follow",
         headers={
             "Authorization":
                 f"Bearer {authenticated_user['access_token']}"
-        },
+        }
     )
-
-    response = client.get(
-        f"/users/{authenticated_user['user'].id}/following"
-    )
-
+    response = client.get(f"/users/{authenticated_user['user'].id}/following")
     assert response.status_code == 200
-
     following = response.json()
-
     assert len(following) == 1
-
-    assert (
-        following[0]["email"]
-        == second_user["payload"]["email"]
-    )
+    assert (following[0]["email"] == second_user["payload"]["email"])
 
 
-def test_delete_user_success(
-        client,
-        authenticated_user,):
+def test_delete_user_success(client, authenticated_user,):
     response = client.delete(
         "/users/me",
         headers={
             "Authorization":
                 f"Bearer {authenticated_user['access_token']}"
-        },
+        }
     )
-
     assert response.status_code == 200
-
-    assert response.json() == {
-        "message": "Deleted User Successfully"
-    }
+    assert response.json() == {"message": "Deleted User Successfully"}
 
 
-def test_delete_user_really_deleted(
-        client,
-        authenticated_user,):
+def test_delete_user_really_deleted(client, authenticated_user):
     token = authenticated_user["access_token"]
-
     response = client.delete(
         "/users/me",
         headers={
             "Authorization": f"Bearer {token}"
-        },
+        }
     )
-
     assert response.status_code == 200
-
     response = client.get(
         "/users/me",
         headers={
             "Authorization": f"Bearer {token}"
-        },
+        }
     )
-
-    assert response.status_code in (
-        401,
-        404,
-    )
- 
+    assert response.status_code in (401, 404)

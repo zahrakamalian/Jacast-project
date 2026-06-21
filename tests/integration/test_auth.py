@@ -3,10 +3,7 @@ from tests.fixtures.users import create_user_data, create_login_data
 
 def test_register_success(client):
     payload = create_user_data()
-    response = client.post(
-        "/auth/register",
-        json=payload
-    )
+    response = client.post("/auth/register", json=payload)
     assert response.status_code == 200
     data = response.json()
     assert data["email"] == payload["email"]
@@ -16,15 +13,9 @@ def test_register_success(client):
 
 def test_register_duplicate_email(client):
     payload = create_user_data()
-    response1 = client.post(
-        "/auth/register",
-        json=payload
-    )
+    response1 = client.post("/auth/register", json=payload)
     assert response1.status_code == 200
-    response2 = client.post(
-        "/auth/register",
-        json=payload,
-    )
+    response2 = client.post("/auth/register", json=payload,)
     assert response2.status_code == 400
 
 
@@ -133,9 +124,7 @@ def test_delete_session_success(client, authenticated_user):
         }
     )
     assert response.status_code == 200
-    assert response.json() == {
-        "message": "Session deactivated successfully"
-    }
+    assert response.json() == {"message": "Session deactivated successfully"}
 
 
 def test_delete_non_existing_session(client, authenticated_user):

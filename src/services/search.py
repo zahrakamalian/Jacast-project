@@ -9,8 +9,8 @@ from src.data.models.podcast import Podcast
 from src.data.models.user import User
 from src.data.models.playlist import Playlist
 from src.schemas.search import (SearchPodcastItem, SearchPodcastResponse, SearchEpisodeItem, SearchEpisodeResponse,
-                            SearchPlaylistItem, SearchPlaylistResponse, SearchUserItem, SearchUserResponse, SearchResponse,
-                            SearchCategoryResult, CategoryPodcastsResponse, BrowseResponse)
+                                SearchPlaylistItem, SearchPlaylistResponse, SearchUserItem, SearchUserResponse, SearchResponse,
+                                SearchCategoryResult, CategoryPodcastsResponse, BrowseResponse)
 from src.schemas.podcast import PodcastDisplay
 from src.schemas.category import PaginatedCategoryResponse, CategoryResponse
 from src.services.podcast import PodcastService
@@ -238,7 +238,8 @@ class SearchService:
         popular = [self._to_podcast_display(p) for p in popular_podcasts]
 
         categories = self.category_repo.get_all_categories(limit=4, offset=0)
-        category_response = [self._to_category_response(c) for c in categories]
+        category_response = [
+            self.category_service._to_category_response(c) for c in categories]
 
         return BrowseResponse(
             new_releases=new_releases,
@@ -251,7 +252,7 @@ class SearchService:
         return self.category_service.get_all_categories(limit, page)
 
     def get_category_detail(self, id: int) -> CategoryResponse:
-        self.category_service.get_category_detail(id)
+        return self.category_service.get_category_detail(id)
 
     def get_category_podcasts(self, category_id: int, limit: int, page: int) -> CategoryPodcastsResponse:
         category = self.category_repo.get_category_by_id(category_id)
